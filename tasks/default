@@ -1,1 +1,1 @@
-. "$BBX_TASKDIR"/helloworld
+"$BBX_TASKDIR"/parse

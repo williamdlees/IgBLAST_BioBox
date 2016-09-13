@@ -1,0 +1,2 @@
+echo 'Cleaning cache.'
+rm -rf "$BBX_CACHEDIR"/igblast-1.0.0
