@@ -14,9 +14,9 @@ The IMGT germline files are downloaded when the container is first used. They ar
 
 # Usage
 
-If Docker is not installed on your machine, installation instructions are available [here](https://www.docker.com/products/overview).
+If Docker is not installed on your machine, installation instructions are available [here](https://www.docker.com/products/overview). It is free to install.
 
-With Docker installed, you can download the IgBLast image with the command
+With Docker installed, you can download the IgBlast image with the command
 
     docker pull williamlees/igblast
 
@@ -82,8 +82,8 @@ The values in <> can take on the following values:
 |`prefix`|Prefix to use for the filenames of the IMGT-style aa, nn and junction files created in the output directory|
 |`igblast file`|Filename of the IgBLAST output file created in the output directory|
 |`set`|Germline set to use: either ncbi or imgt|
-|`species`|One of "mouse", "rhesus monkey" for the NIH set, or "human", "mouse", "rabbit" or "rat" for the IMGT set|
-|`receptor`|Either IG or TR|
+|`species`|"mouse" for the NIH set, or "human", "mouse", "rabbit" or "rat" for the IMGT set|
+|`receptor`|Either "IG" or "TR" ("TR" is only valid for imgt/human, imgt/mouse)|
 
 Example for analysis of rabbit IG sequences using the IMGT germline set:
 
@@ -91,8 +91,8 @@ Example for analysis of rabbit IG sequences using the IMGT germline set:
     version: "0.9.0"
     arguments:
       sequences: "seqs.fasta"
-      outprefix: "output.csv"
-      log: "log.txt"
+      outprefix: "result"
+      log: "result.txt"
     germline:
       set: imgt
       species: rabbit
