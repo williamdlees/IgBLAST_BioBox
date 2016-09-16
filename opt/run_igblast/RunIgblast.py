@@ -35,8 +35,11 @@ def cd(newdir):
     finally:
         os.chdir(prevdir)
 
-supported_sets = ['imgt']
-supported_species = ['human', 'mouse', 'rabbit', 'rat']
+supported_sets = ['imgt', 'ncbi']
+supported_species = {}
+# ALthough there are some database files for rhesus_monkey, they are incomplete
+supported_species['ncbi'] = ['mouse']
+supported_species['imgt'] = ['human', 'mouse', 'rabbit', 'rat']
 supported_receptors = ['IG', 'TR']
 
 def main(argv):
@@ -69,25 +72,46 @@ def main(argv):
             
     if config['germline']['set'] not in supported_sets:
         print 'Error: germline set %s is not available.' % config['germline']['set'] 
+        quit()
+
+    if config['germline']['species'] not in supported_species[config['germline']['set']]:
+        print 'Error: germline set %s does not contain species %s.' % (config['germline']['set'], config['germline']['species'])
+        quit()
 
     if config['germline']['receptor'] not in supported_receptors:
-        print 'Error: receptor %s is not available.' % config['germline']['receptor'] 
+        print 'Error: receptor %s is not available.' % config['germline']['receptor']
+        quit()
+        
+    if config['germline']['receptor'] == 'TR':
+        if config['germline']['set'] == 'imgt':
+            if config['germline']['species'] != 'human' and config['germline']['species'] != 'mouse':
+                print 'The IMGT germline set only supports T cell receptor sequences for human and mouse.'
+                quit()
+        if config['germline']['set'] == 'ncbi':
+            print 'The NCBI germline set only supports IG receptor sequences.'
+            quit()
             
     germpath = os.environ['BBX_CACHEDIR'] + '/igblast-1.0.0'
-    file_root = config['germline']['set'] + '_' + config['germline']['species'] + '_' + config['germline']['receptor']
-    vfile = germpath + '/' + file_root + 'V.fasta'
-    dfile = germpath + '/' + file_root + 'D.fasta'
-    jfile = germpath + '/' + file_root + 'J.fasta'
+    if config['germline']['set'] == 'imgt':
+        file_root = config['germline']['set'] + '_' + config['germline']['species'] + '_' + config['germline']['receptor']
+    elif config['germline']['set'] == 'ncbi':
+        file_root = config['germline']['set'] + '_' + config['germline']['species'] + '_'
+        if config['germline']['species'] == 'mouse':
+            file_root += 'gl_'
+    vfile = germpath + '/' + file_root + 'V'
+    dfile = germpath + '/' + file_root + 'D'
+    jfile = germpath + '/' + file_root + 'J'
     
     for fn in (vfile, dfile, jfile):
-        if not os.path.isfile(fn):
-            print 'Error: germline file %s not found. Please delete all files from the cache and try again.' % fn
+        if not os.path.isfile(fn + '.nhr'):
+            print 'Error: germline file %s not found. If you think it should be there, please run the clean command and try again.' % fn
+            quit()
 
     with cd(os.environ['BBX_MNTDIR'] + '/output'):
         igblastdir = os.environ['BBX_OPTDIR'] + '/ncbi-igblast-1.6.0'
         igblastcmd = igblastdir + '/bin/igblastn' 
         cmd = '%s -germline_db_V %s -germline_db_D %s -germline_db_J %s -organism %s -domain_system %s  -query %s -auxiliary_data optional_file/%s_gl.aux -outfmt 3 >%s' % \
-              (igblastcmd, vfile, dfile, jfile, config['germline']['species'], config['germline']['set'], seqfile, config['germline']['species'], logfile)
+              (igblastcmd, vfile, dfile, jfile, config['germline']['species'], 'imgt', seqfile, config['germline']['species'], logfile)
         print 'Running command %s' % cmd
         subprocess.call(cmd, shell=True)
         

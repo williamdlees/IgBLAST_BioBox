@@ -22,6 +22,8 @@ __docformat__ = "restructuredtext en"
 import sys
 import os
 import os.path
+import shutil
+import stat
 from contextlib import contextmanager
 import argparse
 from Bio import SeqIO
@@ -36,8 +38,33 @@ def cd(newdir):
     finally:
         os.chdir(prevdir)
 
-
-
+# from http://stackoverflow.com/questions/1868714/how-do-i-copy-an-entire-directory-of-files-into-an-existing-directory-using-pyth
+def copytree(src, dst, symlinks = False, ignore = None, prefix = ''):
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+        shutil.copystat(src, dst)
+    lst = os.listdir(src)
+    if ignore:
+        excl = ignore(src, lst)
+        lst = [x for x in lst if x not in excl]
+    for item in lst:
+        s = os.path.join(src, item)
+        d = os.path.join(dst, prefix+item)
+        if symlinks and os.path.islink(s):
+            if os.path.lexists(d):
+                os.remove(d)
+            os.symlink(os.readlink(s), d)
+            try:
+                st = os.lstat(s)
+                mode = stat.S_IMODE(st.st_mode)
+                os.lchmod(d, mode)
+            except:
+                pass # lchmod not available
+        elif os.path.isdir(s):
+            copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+        
 wanted = {}
 wanted['Homo sapiens'] = 'human'
 wanted['Mus musculus'] = 'mouse'
@@ -55,13 +82,14 @@ def main(argv):
         quit()
     
     print 'Installing germline files in cache %s.' % germpath
-    
+        
     with cd(germpath): 
         try:
             subprocess.call("rm *", shell=True)
         except:
             pass
         
+        copytree(os.environ['BBX_OPTDIR'] + '/ncbi-igblast-1.6.0/database', germpath, prefix='ncbi_')
         subprocess.call("wget -O imgt_germlines.fasta http://www.imgt.org/download/GENE-DB/IMGTGENEDB-ReferenceSequences.fasta-nt-WithoutGaps-F+ORF+inframeP", shell=True)
         
         recs = list(SeqIO.parse('imgt_germlines.fasta', 'fasta'))
@@ -87,8 +115,9 @@ def main(argv):
         igblastpath = os.environ['BBX_OPTDIR'] + '/ncbi-igblast-1.6.0'
         for fn in fastafiles:
             print 'Processing germline file %s' % fn
-            print '%s/bin/makeblastdb -parse_seqids -dbtype nucl -in %s' % (igblastpath, fn)
-            subprocess.call('%s/bin/makeblastdb -parse_seqids -dbtype nucl -in %s' % (igblastpath, fn), shell=True)        
+            cmd = '%s/bin/makeblastdb -parse_seqids -dbtype nucl -in %s -out %s' % (igblastpath, fn, fn.replace('.fasta', ''))
+            print cmd
+            subprocess.call(cmd, shell=True)        
 
         print 'Germline file processing complete.'
         subprocess.call('touch complete', shell=True)
