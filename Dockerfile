@@ -2,7 +2,7 @@
 #MAINTAINER William_Lees, william@lees.org.uk
 
 # add required Debian packages here (uncomment)
-RUN apt-get update && apt-get install -y wget zip python-pip python-biopython git
+RUN apt-get clean && apt-get update && apt-get install -y wget zip python-pip python-biopython git
 RUN wget -O - ftp://ftp.ncbi.nih.gov/blast/executables/igblast/release/1.6.0/ncbi-igblast-1.6.0-x64-linux.tar.gz | tar -xzC ${BBX_OPTDIR}
 RUN wget -P /opt/ncbi-igblast-1.6.0/internal_data -w 1 -nH --cut-dirs=5 -r ftp://ftp.ncbi.nih.gov/blast/executables/igblast/release/internal_data/
 RUN wget -P /opt/ncbi-igblast-1.6.0/database -w 1 -nH --cut-dirs=5 -r ftp://ftp.ncbi.nih.gov/blast/executables/igblast/release/database/
