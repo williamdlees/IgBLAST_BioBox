@@ -61,7 +61,7 @@ One other command is supported. It will open an interactive session with the con
 
 # Control File Format
 
-The control file is in yaml and has the following format:
+The control file is placed in the input directory. Its name must be biobox.yaml. It has the following format:
 
     ---
     version: "0.9.0"
