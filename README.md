@@ -74,7 +74,7 @@ The control file is placed in the input directory. Its name must be biobox.yaml.
         species: <species>
         receptor: <receptor>
 
-The values in <> can take on the following values:
+The arguments in <> can take on the following values:
 
 |Value|Option or Meaning|
 |-----|-----------------|
