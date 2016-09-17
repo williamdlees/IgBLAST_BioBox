@@ -1,0 +1,10 @@
+---
+version: "0.9.0"
+arguments:
+  sequences: "PW99_seqs.fasta"
+  outprefix: "PW99"
+  log: "PW99_analysis.txt"
+  germline:
+    set: imgt
+    species: human
+    receptor: IG

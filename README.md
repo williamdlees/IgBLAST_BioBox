@@ -98,11 +98,15 @@ Example for analysis of rabbit IG sequences using the IMGT germline set:
       species: rabbit
       receptor: IG
 
+# Example
+
+The example subdirectory contains sample human heavy chain sequences (taken from the PW99 dataset, Zheng et al., J Clin Invest. 2004) and suitable files for control and execution.
+
 # Restrictions
 
 The container does not support the use of other germline sets. The AIRR Community is defining a standard format for a germline set, and it's intended to introduce support as this standard emerges.
 
-It's currently not possible to tune command-line parameters to IgBlast.
+It's currently not possible to tune command-line parameters to IgBLAST.
 
 Alignment is always against the IMGT alignment and field delineation (IgBLAST also supports the Kabat system).
 
