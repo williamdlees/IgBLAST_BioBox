@@ -89,7 +89,7 @@ def main(argv):
         except:
             pass
         
-        copytree(os.environ['BBX_OPTDIR'] + '/ncbi-igblast-1.6.0/database', germpath, prefix='ncbi_')
+        copytree(os.environ['BBX_OPTDIR'] + '/ncbi-igblast-1.8.0/database', germpath, prefix='ncbi_')
         subprocess.call("wget -O imgt_germlines.fasta http://www.imgt.org/download/GENE-DB/IMGTGENEDB-ReferenceSequences.fasta-nt-WithoutGaps-F+ORF+inframeP", shell=True)
         
         recs = list(SeqIO.parse('imgt_germlines.fasta', 'fasta'))
@@ -112,7 +112,7 @@ def main(argv):
                 SeqIO.write(r, fastafile, 'fasta')
                 fastafiles.append(fastafile)
         
-        igblastpath = os.environ['BBX_OPTDIR'] + '/ncbi-igblast-1.6.0'
+        igblastpath = os.environ['BBX_OPTDIR'] + '/ncbi-igblast-1.8.0'
         for fn in fastafiles:
             print 'Processing germline file %s' % fn
             cmd = '%s/bin/makeblastdb -parse_seqids -dbtype nucl -in %s -out %s' % (igblastpath, fn, fn.replace('.fasta', ''))

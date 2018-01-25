@@ -108,7 +108,7 @@ def main(argv):
             quit()
 
     with cd(os.environ['BBX_MNTDIR'] + '/output'):
-        igblastdir = os.environ['BBX_OPTDIR'] + '/ncbi-igblast-1.6.0'
+        igblastdir = os.environ['BBX_OPTDIR'] + '/ncbi-igblast-1.8.0'
         igblastcmd = igblastdir + '/bin/igblastn' 
         cmd = '%s -germline_db_V %s -germline_db_D %s -germline_db_J %s -organism %s -domain_system %s  -query %s -auxiliary_data optional_file/%s_gl.aux -outfmt 3 >%s' % \
               (igblastcmd, vfile, dfile, jfile, config['germline']['species'], 'imgt', seqfile, config['germline']['species'], logfile)

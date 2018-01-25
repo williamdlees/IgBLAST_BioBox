@@ -1,4 +1,4 @@
 #!/bin/sh
-export IGDATA="$BBX_OPTDIR"/ncbi-igblast-1.6.0
+export IGDATA="$BBX_OPTDIR"/ncbi-igblast-1.8.0
 python "$BBX_OPTDIR"/run_igblast/ExtractIMGTFiles.py
 python "$BBX_OPTDIR"/run_igblast/RunIgblast.py

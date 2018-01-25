@@ -6,7 +6,7 @@ The image has been developed as a prototype for the [AIRR Community](http://airr
 
 # Functionality
 
-The container implements version 1.6 of IgBLAST. It supports the NCBI's collection of [mouse and rhesus monkey germline genes](http://www.ncbi.nlm.nih.gov/igblast/showGermline.cgi), and [IMGT germline genes](http://imgt.org/genedb/directlinks) for human, mouse, rabbit and rat. IG receptor sequences are provided for all species. T-cell receptor sequences are only provided in the IMGT gene set, and only for human and mouse.
+The container implements version 1.8 of IgBLAST. It supports the NCBI's collection of [mouse and rhesus monkey germline genes](http://www.ncbi.nlm.nih.gov/igblast/showGermline.cgi), and [IMGT germline genes](http://imgt.org/genedb/directlinks) for human, mouse, rabbit and rat. IG receptor sequences are provided for all species. T-cell receptor sequences are only provided in the IMGT gene set, and only for human and mouse.
 
 Sequences for analysis should be provided in FASTA format. Output is provided both in IgBLAST report format (-outfmt 3) and in IMGT-style CSV files. Translation to the latter is accomplished via [TrIgs IgBLASTPlus](https://github.com/williamdlees/TRIgS/blob/master/docs/IgBLASTPlus.md). 
 
