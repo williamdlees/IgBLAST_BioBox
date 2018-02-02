@@ -38,6 +38,8 @@ Here:
 - `williamlees/igblast` is the name of the container
 - `parse` is the command to pass to the container
 
+Note that under Linux, you can use $pwd in the path to denote the current directory, but in Windows the equivalent string is now %cd%.
+
 As noted above, the IMGT files are downloaded when the container is first used, and are stored in the cache directory for future use (about 5MB of space is required). You can delete the cache directory at any point between runs, but runs will be faster if it is left intact. You can force the download of a fresh set of IMGT germlines into the cache either by deleting the contents of the cache directory or by using the clean command:
 
     docker run \
