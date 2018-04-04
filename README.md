@@ -4,7 +4,7 @@ Now supporting v1.8.0 !
 
 The US National Centre for Biotechnology Information's [IgBLAST](http://www.ncbi.nlm.nih.gov/igblast/ "IgBLAST") tool is a high-performance parser for immunoglobulin and T cell receptor sequences which you can install and run on your own hardware: however it can be complex to install. This repository defines a Docker image for IgBLAST. With Docker installed, you can download and run the image for IgBLAST, or run it on one of a number of cloud platforms, including Amazon Web Services and Azure.
 
-The image has been developed as a prototype for the [AIRR Community](http://airr.irmacs.sfu.ca/). The community is in the process of defining a standard interface for receptor sequence parsers, which will make it easy for users to 'plug and play' in their analysis pipelines. This image will be developed in line with the emerging standard - which is likely to involve some changes to the command syntax along the way. Discussion of the standard and this implementation can be found on the [Community's Forum](http://b-t.cr) and if you are interested we would very much like you to join the forum and participate.
+The image has been developed as a prototype for the [AIRR Community](http://airr.irmacs.sfu.ca/), as an example of a containerized application controllable from the command line. The container is linked to [Docker Hub](https://hub.docker.com/r/williamlees/igblast/): a push to Github will automatically trigger a rebuild in DockerHub.
 
 # Functionality
 
